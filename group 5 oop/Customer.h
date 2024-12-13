@@ -9,12 +9,12 @@ using namespace std;
 // Class for managing customer details and rental history
 class Customer {
 public:
-    string username;           // Customer's username
-    string password;           // Customer's password
-    string phoneNumber;        // Customer's phone number
-    string nationalID;         // Customer's National ID (unique identifier)
-    string uniqueID;           // System-generated unique ID
-    vector<string> rentalHistory; // List of rented vehicle IDs
+    string username;          
+    string password;          
+    string phoneNumber;        
+    string nationalID;        
+    string uniqueID;          
+    vector<string> rentalHistory; 
 
     // Static counter to generate unique IDs
     static int uniqueIDCounter;
@@ -56,3 +56,4 @@ public:
 int Customer::uniqueIDCounter = 0;
 
 #endif
+
