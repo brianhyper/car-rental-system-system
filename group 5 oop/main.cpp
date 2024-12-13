@@ -6,24 +6,24 @@
 #include <algorithm>
 using namespace std;
 
-// Define the map declared as extern in Customer.h
+// Define the map declared as external in Customer.h
 unordered_map<string, Customer> customersByNationalID;
 
 void customerMenu(vector<Vehicle*>& vehicles, Customer& customer);
 void ownerMenu(vector<Vehicle*>& vehicles);
 
 int main() {
-    // Store Owner login (for demonstration, we hardcode credentials)
-    unordered_map<string, string> owners = {{"owner1", "adminpass"}};
+    // Store Owner login (for the assignment, we hardcode credentials)
+    unordered_map<string, string> owners = {{"owner", "adminpass"}};
 
     // Sample vehicles
     vector<Vehicle*> vehicles;
-    vehicles.push_back(new Vehicle("C001", "Toyota", "Corolla", 50.0));
-    vehicles.push_back(new Vehicle("B001", "Yamaha", "MT-07", 30.0));
+    vehicles.push_back(new Vehicle("C001", "Toyota", "Corolla", 5000.0));
+    vehicles.push_back(new Vehicle("B001", "Mazda", "CX-5", 7000.0));
 
     int choice;
     while (true) {
-        cout << "Welcome to the Vehicle Rental System!" << endl;
+        cout << "Welcome to the Vehicle Group 5 Rental System!" << endl;
         cout << "1. Login as Customer\n2. Sign up as Customer\n3. Login as Store Owner\n4. Exit\n";
         cin >> choice;
 
@@ -47,7 +47,7 @@ int main() {
                 cout << "Invalid credentials!" << endl;
             }
         } else if (choice == 2) {
-            // Customer Sign Up
+            // If the chooses customer Sign Up 
             string username, password, phone, nationalID;
             cout << "Choose a Username: ";
             cin >> username;
