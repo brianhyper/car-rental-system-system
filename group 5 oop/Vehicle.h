@@ -5,10 +5,9 @@
 #include <string>
 using namespace std;
 
-// Base class Vehicle
 class Vehicle {
 public:
-    string vehicleID;  
+    string vehicleID;   
     string brand;       
     string model;       
     double rentalRate;  
@@ -17,12 +16,10 @@ public:
     int rentalDays;     
     double totalCost; 
 
-    // Constructor
     Vehicle(string id, string b, string m, double rate)
         : vehicleID(id), brand(b), model(m), rentalRate(rate), available(true),
           renterID(""), rentalDays(0), totalCost(0.0) {}
 
-    // Display vehicle details
     virtual void displayDetails() {
         cout << "ID: " << vehicleID 
              << ", Brand: " << brand 
@@ -32,7 +29,6 @@ public:
              << endl;
     }
 
-    // Rent the vehicle
     void rent(const string& customerID, int days) {
         if (available) {
             available = false;         
@@ -46,7 +42,6 @@ public:
         }
     }
 
-    // Return the vehicle if a customer rents one
     void returnVehicle() {
         available = true;    
         renterID = "";      
