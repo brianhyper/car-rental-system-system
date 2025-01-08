@@ -1,0 +1,22 @@
+  Project Overview:  
+The project aimed to develop a   Vehicle Rental System   for customers and store owners. Key features included customer account management, vehicle rentals, and store owner vehicle management. Validation for phone numbers and national IDs was implemented to ensure correct input.
+
+  Development Process:  
+1.   Requirements Gathering:   Defined customer and store owner roles with features like login, vehicle management, and rental history.
+2.   System Design:   Designed customer and vehicle classes and a main application for handling user interactions.
+3.   Implementation:   Implemented core logic using C++ Standard Library features like `std::hash` for password hashing and `regex` for validation.
+4.   Authentication & Validation:   Secured password storage with hashing and validated phone numbers (10 digits) and national IDs (8 digits).
+
+  Challenges Faced:  
+1.   Password Hashing:   Initially used OpenSSL but switched to `std::hash` for simplicity and no external dependencies.
+2.   Input Validation:   Ensured phone numbers and national IDs were valid using regular expressions.
+3.   Authentication:   Stored hashed passwords to secure customer data.
+4.   Data Management:   Handled vehicle rentals and dynamic data with vectors.
+5.   User Interface:   Developed simple console menus for customers and store owners.
+6.   Debugging & Refactoring:   Improved code modularity and resolved issues with user input and validation.
+
+  Solutions & Future Enhancements:  
+- Introduced more secure password hashing methods (like bcrypt) and considered file handling for persistent data storage.
+- Suggested moving to a GUI interface and implementing database support for better data management in the future.
+
+The project successfully met its requirements and is scalable for future upgrades.
