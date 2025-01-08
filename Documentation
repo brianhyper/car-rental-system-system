@@ -1,0 +1,162 @@
+    Software Requirements for Vehicle Rental System
+
+     1.   Functional Requirements:  
+   -   Customer Registration and Login:  
+     - Customers should be able to register with a unique username, password, phone number (10 digits), and national ID (8 digits).
+     - Passwords should be hashed for security.
+     - Customers should log in using their username and password.
+   
+   -   Customer Profile and Rental History:  
+     - After logging in, customers should be able to view their profile, including their unique ID, phone number, and national ID.
+     - Customers should be able to track their rental history.
+
+   -   Vehicle Management for Store Owners:  
+     - Store owners should be able to log in with a username and password.
+     - Store owners should be able to add, remove, and view all vehicles in the system.
+     - Store owners should be able to see rented vehicles.
+
+   -   Vehicle Rental:  
+     - Customers should be able to view available vehicles and rent them.
+     - Rental information should be stored, and customers should be able to add rented vehicles to their rental history.
+
+   -   Input Validation:  
+     - Validate that the phone number is exactly 10 digits and the national ID is exactly 8 digits.
+     - Handle incorrect data entry with appropriate messages.
+
+---
+
+     2.   Non-Functional Requirements:  
+   -   Usability:  
+     - The system should be easy to use, with clear menus and instructions for both customers and store owners.
+   
+   -   Performance:  
+     - The system should be able to handle multiple users (both customers and store owners) at the same time without significant performance degradation.
+   
+   -   Security:  
+     - Passwords should be stored securely using hashing.
+     - User data such as phone numbers and national IDs should be validated and protected.
+
+   -   Scalability:  
+     - The system should be scalable to accommodate additional features, such as payment processing and vehicle categorization.
+
+   -   Reliability:  
+     - The system should be reliable with no data loss during typical usage.
+   
+   -   Portability:  
+     - The application should be able to run on any system that supports C++11 or later.
+
+---
+
+     3.   Class Diagram:  
+
++-----------------------------------+
+|            Customer              |
++-----------------------------------+
+| - username: string               |
+| - hashedPassword: string         |
+| - phoneNumber: string            |
+| - nationalID: string             |
+| - uniqueID: string               |
+| - rentalHistory: vector<string>  |
++-----------------------------------+
+| + Customer()                     |
+| + Customer(user: string, pass: string, phone: string, id: string) |
+| + authenticate(user: string, pass: string): bool |
+| + addRental(vehicleID: string)   |
+| + displayDetails()               |
++-----------------------------------+
+
++-----------------------------------+
+|            Vehicle               |
++-----------------------------------+
+| - vehicleID: string              |
+| - brand: string                  |
+| - model: string                  |
+| - rentalRate: double             |
+| - available: bool                |
++-----------------------------------+
+| + Vehicle(id: string, brand: string, model: string, rate: double) |
+| + displayDetails()               |
+| + rent(customerID: string, days: int) |
++-----------------------------------+
+
++-----------------------------------+
+|            Main (Application)    |
++-----------------------------------+
+| + main()                         |
+| + customerMenu()                 |
+| + ownerMenu()                    |
++-----------------------------------+
+```
+
+-   Customer Class:   Handles customer data, authentication, rental history, and unique ID generation.
+-   Vehicle Class:   Handles vehicle data, rental rate, availability, and vehicle renting logic.
+-   Main Application:   Provides menus and manages interaction between customers and store owners.
+
+---
+
+     4.   Interaction Diagram:  
+
+1.   Customer Login:  
+   - The customer enters their username and password.
+   - The system checks if the credentials match an existing customer.
+   - If authenticated, the customer is granted access to the customer menu.
+
+2.   Customer Renting a Vehicle:  
+   - The customer selects a vehicle from the available vehicles list.
+   - The system checks if the vehicle is available.
+   - If available, the system processes the rental and adds the vehicle ID to the customer's rental history.
+
+3.   Store Owner Managing Vehicles:  
+   - The store owner logs in and accesses the store owner menu.
+   - The store owner can view, add, or remove vehicles.
+   - When a vehicle is rented, the system updates its availability status.
+
+---
+
+     5.   Test Cases and Results Summary:  
+
+  Test Case 1: Customer Registration Validation  
+-   Test Input:   "Phone: 1234567890, National ID: 12345678"
+-   Expected Output:   Account successfully created.
+-   Result:   Passed.
+
+  Test Case 2: Customer Registration Invalid Phone Number  
+-   Test Input:   "Phone: 12345, National ID: 12345678"
+-   Expected Output:   Error message: "Phone number must be 10 digits."
+-   Result:   Passed.
+
+  Test Case 3: Customer Login with Correct Credentials  
+-   Test Input:   "Username: customer1, Password: correctpass"
+-   Expected Output:   Login successful, access granted to the customer menu.
+-   Result:   Passed.
+
+  Test Case 4: Customer Login with Incorrect Credentials  
+-   Test Input:   "Username: customer1, Password: wrongpass"
+-   Expected Output:   Error message: "Invalid credentials."
+-   Result:   Passed.
+
+  Test Case 5: Vehicle Rental by Customer  
+-   Test Input:   "Vehicle ID: V001, Rental Duration: 3 days"
+-   Expected Output:   Rental processed, vehicle added to rental history.
+-   Result:   Passed.
+
+  Test Case 6: Vehicle Rental for Unavailable Vehicle  
+-   Test Input:   "Vehicle ID: V002"
+-   Expected Output:   Error message: "Vehicle not available for rent."
+-   Result:   Passed.
+
+  Test Case 7: Store Owner Adding Vehicle  
+-   Test Input:   "Vehicle ID: V003, Brand: Ford, Model: Focus, Rental Rate: 4000"
+-   Expected Output:   Vehicle successfully added.
+-   Result:   Passed.
+
+  Test Case 8: Store Owner Removing Vehicle  
+-   Test Input:   "Vehicle ID: V003"
+-   Expected Output:   Vehicle successfully removed.
+-   Result:   Passed.
+
+  Test Case 9: Customer View Rental History  
+-   Test Input:   "Customer: customer1"
+-   Expected Output:   Display customer's rental history.
+-   Result:   Passed.
