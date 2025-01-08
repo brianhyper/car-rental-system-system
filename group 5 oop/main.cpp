@@ -4,19 +4,27 @@
 #include <unordered_map>
 #include <vector>
 #include <algorithm>
+#include <regex>  
 using namespace std;
 
-// Define the map declared as external in Customer.h
+// Validate phone number (exactly 10 digits, and all digits)
+bool validatePhoneNumber(const string& phone) {
+    return regex_match(phone, regex("^[0-9]{10}$"));
+}
+
+// Validate national ID (exactly 8 digits, and all digits)
+bool validateNationalID(const string& id) {
+    return regex_match(id, regex("^[0-9]{8}$"));
+}
+
 unordered_map<string, Customer> customersByNationalID;
 
 void customerMenu(vector<Vehicle*>& vehicles, Customer& customer);
 void ownerMenu(vector<Vehicle*>& vehicles);
 
 int main() {
-    // Store Owner login (for the assignment, we hardcode credentials)
-    unordered_map<string, string> owners = {{"owner", "adminpass"}};
+    unordered_map<string, string> owners = { {"owner", "adminpass"} };
 
-    // Sample vehicles
     vector<Vehicle*> vehicles;
     vehicles.push_back(new Vehicle("C001", "Toyota", "Corolla", 5000.0));
     vehicles.push_back(new Vehicle("B001", "Mazda", "CX-5", 7000.0));
@@ -28,7 +36,6 @@ int main() {
         cin >> choice;
 
         if (choice == 1) {
-            // Customer Login
             string username, password;
             cout << "Username: ";
             cin >> username;
@@ -47,7 +54,6 @@ int main() {
                 cout << "Invalid credentials!" << endl;
             }
         } else if (choice == 2) {
-            // If the chooses customer Sign Up 
             string username, password, phone, nationalID;
             cout << "Choose a Username: ";
             cin >> username;
@@ -55,29 +61,30 @@ int main() {
             cin >> password;
             cout << "Enter your Phone Number: ";
             cin >> phone;
+
+            // Validate phone number
+            if (!validatePhoneNumber(phone)) {
+                cout << "Invalid phone number. It must be exactly 10 digits." << endl;
+                continue;  // Skip the rest of the sign-up process
+            }
+
             cout << "Enter your National ID Number: ";
             cin >> nationalID;
 
-            // Check if National ID already exists
-            if (customersByNationalID.find(nationalID) != customersByNationalID.end()) {
-                cout << "This National ID is already in the system. Please try again." << endl;
-                continue;
+            // Validate national ID
+            if (!validateNationalID(nationalID)) {
+                cout << "Invalid national ID. It must be exactly 8 digits." << endl;
+                continue;  // Skip the rest of the sign-up process
             }
 
-            // Create a new customer and store them in the map
-            Customer newCustomer(username, password, phone, nationalID);
-            customersByNationalID[nationalID] = newCustomer;
-            cout << "Account created successfully! Your unique ID is: " << newCustomer.uniqueID << endl;
-
-            // Ask if user wants to create another account or exit
-            char continueOption;
-            cout << "Do you want to create another account? (y/n): ";
-            cin >> continueOption;
-            if (continueOption == 'n' || continueOption == 'N') {
-                continue;  // Continue with main menu
+            try {
+                Customer newCustomer(username, password, phone, nationalID);
+                customersByNationalID[nationalID] = newCustomer;
+                cout << "Account created successfully! Your unique ID is: " << newCustomer.uniqueID << endl;
+            } catch (const exception& e) {
+                cout << "Error: " << e.what() << endl;
             }
         } else if (choice == 3) {
-            // Store Owner Login
             string username, password;
             cout << "Username: ";
             cin >> username;
@@ -90,15 +97,14 @@ int main() {
                 cout << "Invalid credentials!" << endl;
             }
         } else if (choice == 4) {
-            // Exit the program
             cout << "Exiting the system. Goodbye!" << endl;
-            break; // Exit the while loop and terminate the program
+            break;
         } else {
             cout << "Invalid option, please try again!" << endl;
         }
     }
 
-    // Cleanup: Delete dynamically allocated vehicles
+    // Clean up dynamic memory
     for (auto vehicle : vehicles) {
         delete vehicle;
     }
@@ -106,7 +112,6 @@ int main() {
     return 0;
 }
 
-// Customer Menu (View vehicles, Rent vehicles)
 void customerMenu(vector<Vehicle*>& vehicles, Customer& customer) {
     int choice;
     do {
@@ -142,7 +147,6 @@ void customerMenu(vector<Vehicle*>& vehicles, Customer& customer) {
     } while (choice != 4);
 }
 
-// Store Owner Menu (Add or Remove vehicles, View rented vehicles)
 void ownerMenu(vector<Vehicle*>& vehicles) {
     int choice;
     do {
@@ -167,7 +171,6 @@ void ownerMenu(vector<Vehicle*>& vehicles) {
                 }
             }
         } else if (choice == 3) {
-            // Add Vehicle
             string id, brand, model;
             double rate;
             cout << "Enter Vehicle ID: ";
@@ -182,7 +185,6 @@ void ownerMenu(vector<Vehicle*>& vehicles) {
             vehicles.push_back(new Vehicle(id, brand, model, rate));
             cout << "Vehicle added successfully!" << endl;
         } else if (choice == 4) {
-            // Remove Vehicle
             string id;
             cout << "Enter Vehicle ID to remove: ";
             cin >> id;
@@ -190,8 +192,8 @@ void ownerMenu(vector<Vehicle*>& vehicles) {
             auto it = find_if(vehicles.begin(), vehicles.end(), [&id](Vehicle* v) { return v->vehicleID == id; });
 
             if (it != vehicles.end()) {
-                delete *it;  // Delete the vehicle from memory
-                vehicles.erase(it);  // Remove the vehicle from the list
+                delete *it;
+                vehicles.erase(it);
                 cout << "Vehicle removed successfully!" << endl;
             } else {
                 cout << "Vehicle not found!" << endl;
