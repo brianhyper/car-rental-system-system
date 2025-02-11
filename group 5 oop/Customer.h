@@ -9,7 +9,7 @@
 #include <iomanip>
 using namespace std;
 
-// Helper function to hash passwords using std::hash
+// Helper function to hash passwords using std::hash 
 size_t hashPassword(const string& password) {
     std::hash<string> hasher;
     return hasher(password);  // Returns the hash as a size_t
@@ -24,6 +24,7 @@ public:
     string nationalID;        // Customer's national ID
     string uniqueID;          // Unique ID for the customer
     vector<string> rentalHistory;  // History of rented vehicles
+
 
     // Static counter to generate unique IDs
     static int uniqueIDCounter;
@@ -65,5 +66,5 @@ public:
 // Initialize static unique ID counter
 int Customer::uniqueIDCounter = 0;
 
-#endif  // CUSTOMER_H
+#endif 
 
