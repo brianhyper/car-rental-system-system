@@ -112,7 +112,7 @@ Remove vehicles from the system if needed.
 
 Notes
 
-Memory Cleanup: The program removes all stored vehicles from memory when it ends.
+Memory Cleanup: The program removes all stored vehicles from memory when it ends .
 
 Future Upgrades: This system can be improved with features like a database or a graphical interface.
 
